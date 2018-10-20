@@ -1,14 +1,9 @@
 const express = require('express')
+var v1 = require('./v1')
 const app = express()
 const port = 3000 // TODO: move this to use env variable if exists
 
-app.get('/v1/face', (req, res) => {
-    // TODO: map to file
-})
-
-app.get('/v1/audio', (req, res) => {
-    // TODO: map to file
-})
+app.use('/v1', v1)
 
 app.get('/', (req, res) => res.send('EXServ'))
 
