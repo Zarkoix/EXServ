@@ -1,0 +1,19 @@
+{
+  "name": "exserv",
+  "version": "0.0.0",
+  "description": "TODO: make this",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"ha tests, lol\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zarkoix/EXServ.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Zarkoix/EXServ/issues"
+  },
+  "homepage": "https://github.com/Zarkoix/EXServ#readme"
+}
