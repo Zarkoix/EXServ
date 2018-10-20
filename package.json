@@ -4,6 +4,7 @@
   "description": "TODO: make this",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"ha tests, lol\""
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Zarkoix/EXServ/issues"
   },
-  "homepage": "https://github.com/Zarkoix/EXServ#readme"
+  "homepage": "https://github.com/Zarkoix/EXServ#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
