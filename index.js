@@ -10,6 +10,6 @@ app.get('/v1/audio', (req, res) => {
     // TODO: map to file
 })
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('EXServ'))
 
 app.listen(port, () => console.log(`EXServ listening on port ${port}!`))
