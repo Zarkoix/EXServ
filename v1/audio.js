@@ -14,26 +14,28 @@ const params = {
 };
 
 module.exports = {
-  runRequest: function (imageUrl, cb) {
-    const options = {
-        uri: uriBase,
-        qs: params,
-        body: '{"url": ' + '"' + imageUrl + '"}',
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key' : subscriptionKey
-        }
-    };
-    request.post(options, (error, response, body) => {
-      if (error) {
-        console.log('Error: ', error);
-        return;
-      }
-      var data = JSON.parse(body)[0].faceAttributes
-      cb(data)
-      let jsonResponse = JSON.stringify(data, null, '  ');
-      console.log('JSON Response\n');
-      console.log(jsonResponse);
-    });
+  runRequest: function (audioFile, cb) {
+      const deepAffectsAPIKey = "dDdPzdT8Q9iHjnyQEIIIxQHwp7mTiEoy";
+      // Initialization, denoising, emotion recognition
+
+      let DeepAffects = require('deep-affects');
+
+      let defaultClient = DeepAffects.ApiClient.instance;
+
+// Configure API key authorization: UserSecurity
+      let UserSecurity = defaultClient.authentications['UserSecurity'];
+      UserSecurity.apiKey = deepAffectsAPIKey;
+      let emotionAPI = new DeepAffects.EmotionApi();
+      let body = DeepAffects.Audio.fromFile(audioFile); // {Audio} Audio object that needs to be denoised.
+      let callback = function (error, data, response) {
+          if (error) {
+              console.error(error);
+          } else {
+              cb(data)
+              console.log('API called successfully. Returned data: ' + JSON.stringify(response));
+          }
+      };
+      emotionAPI.syncRecogniseEmotion(body, callback);
+// You can make 5 requests per minute to each API. The requests are capped at 100 requests per day.
   }
-}
+};
