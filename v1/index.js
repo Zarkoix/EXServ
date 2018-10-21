@@ -20,8 +20,22 @@ router.route('/face')
   });
 router.route('/audio')
   .get(function (req, res) {
-    // TODO: actually implement this lol
-    console.log('audio')
+    console.log('audio');
+    const audioFile = "/Users/willtaylor/downloads/AngerDemo.mp3";
+    audio.runRequest(audioFile, function (data) {
+        let standardData = {};
+        for (i in data) {
+            if (data[i].emotion === 'happy') {
+                data[i].emotion = 'happiness';
+            } else if (data[i].emotion === 'sad') {
+                data[i].emotion = 'sadness';
+            } else if (data[i].emotion === 'angry') {
+                data[i].emotion = 'anger';
+            }
+            standardData[data[i].emotion] = data[i].score;
+        }
+        res.send(standardData);
+      })
   });
 
 module.exports = router;
