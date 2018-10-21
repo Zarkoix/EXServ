@@ -12,7 +12,8 @@ router.route('/face')
     }).on('end', () => {
       b64 = Buffer.concat(b64).toString();
       face.runRequest(b64, function (body) {
-        var data = body
+        let data = JSON.parse(body);
+        data = data[0].faceAttributes.emotion;
         console.log(data)
         res.send(data) // only send first face
       })
