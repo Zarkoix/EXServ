@@ -1,7 +1,7 @@
 const express = require('express')
 var v1 = require('./v1')
 const app = express()
-const port = 3000 // TODO: move this to use env variable if exists
+const port = 4000 // TODO: move this to use env variable if exists
 
 app.use('/v1', v1)
 

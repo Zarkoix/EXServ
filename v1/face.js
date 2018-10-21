@@ -13,27 +13,54 @@ const params = {
     'returnFaceAttributes': 'emotion'
 };
 
+var dataURItoBuffer = function (dataURL, callback) {
+    var buff = new Buffer(dataURL.replace(/^data:image\/(png|gif|jpeg);base64,/, ''), 'base64');
+    callback(buff);
+};
+
+var sendImageToMicrosoftDetectEndPoint = function (imageData, callback) {
+    console.log('Entered helper');
+    dataURItoBuffer(imageData, function (buff) {
+        request.post({
+            url: uriBase,
+            qs: params,
+            headers: {
+                'Content-Type': 'application/octet-stream',
+                'Ocp-Apim-Subscription-Key': subscriptionKey
+            },
+            body: buff
+        }, function (err, httpResponse, body) {
+            callback(body);
+        });
+    })
+}
+
 module.exports = {
-  runRequest: function (imageUrl, cb) {
-    const options = {
-        uri: uriBase,
-        qs: params,
-        body: '{"url": ' + '"' + imageUrl + '"}',
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key' : subscriptionKey
-        }
-    };
-    request.post(options, (error, response, body) => {
-      if (error) {
-        console.log('Error: ', error);
-        return;
-      }
-      var data = JSON.parse(body)[0].faceAttributes
-      cb(data)
-      let jsonResponse = JSON.stringify(data, null, '  ');
-      console.log('JSON Response\n');
-      console.log(jsonResponse);
-    });
+  runRequest: function (imageB64, cb) {
+    // const options = {
+    //     uri: uriBase,
+    //     qs: params,
+    //     body: makeblob(imageB64),
+    //     headers: {
+    //         'Content-Type': 'application/octet-stream',
+    //         'Ocp-Apim-Subscription-Key' : subscriptionKey
+    //     }
+    // };
+    // request.post(options, (error, response, body) => {
+    //   if (error) {
+    //     console.log('Error: ', error);
+    //     return;
+    //   }
+    //   // console.log(body)
+    //   const bodyJSON = JSON.parse(body)
+    //   var data = bodyJSON[0].faceAttributes
+    //   cb(data)
+    //   let jsonResponse = JSON.stringify(data, null, '  ');
+    //   console.log('JSON Response\n');
+    //   console.log(jsonResponse);
+    // });
+    sendImageToMicrosoftDetectEndPoint(imageB64, function(body){
+      cb(body)
+    })
   }
 }
