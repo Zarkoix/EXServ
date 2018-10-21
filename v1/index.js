@@ -1,4 +1,5 @@
 var face = require('./face')
+var audio = require('./audio')
 var router = require('express').Router();
 
 router.route('/face')
